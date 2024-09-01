@@ -1,0 +1,20 @@
+\section{Generic Transform from Strong Execution-Leaks to Sending-Leaks}
+
+We give a generic transform from strong execution-leaks secure protocol to sending-leaks secure protocol assuming the existence of collision resistant hash function $\hash$.
+
+Given a strong execution-leaks secure protocol $\Protocol = (\Party_1, \ldots, \Party_\NumP)$, we can construct a sending-leaks secure protocol $\Protocol' = (\Party_1', \ldots, \Party_\NumP')$ with the same number of parties and the same output. We give the explicit transform in \cref{fig:strExe2send}. With 
+
+\begin{figure}[ht!]%
+	\centering%
+	\nicoresetlinenr
+	\fbox{%
+		\begin{minipage}[t]{.45\textwidth}%
+            \calg{$\Party_i'(\{\smsg_{j,i}, \pmsg_j\}_{j<i})$} 
+            \begin{nicodemus}
+				\item 
+			\end{nicodemus}
+		\end{minipage}
+	}%
+	\caption{Construction of $\Protocol'$ secure in the sending-leaks model. }
+	\label{fig:strExe2send}
+\end{figure}
