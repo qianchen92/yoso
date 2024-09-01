@@ -1,26 +1,21 @@
 \section{Efficient Randomness Generation in the Execution-Leaks Model}
 
-In this section, we provide a more efficient protocol secure in the execution-leaks model. The main technical part of this protocol is a robust secret sharing. The general idea is that a randomness generator secret shares his randomness into $2\NumP$ shares. 
+In this section, we provide a more efficient protocol secure in the execution-leaks model. The main technical part of this protocol is a robust secret sharing. The general idea is that a randomness generator secret shares his randomness into $(2\NumP, 3\NumP+1)$ shares. 
 
 \begin{figure}[ht!]%
 	\centering%
 	\nicoresetlinenr
 	\fbox{%
-		\begin{minipage}[t]{3cm}%
+		\begin{minipage}[t]{.45\textwidth}%
             \noindent \calg{$\RG_i(\rand_i)$}
             \begin{nicodemus}
-				\item $x_1, \ldots, x_{\NumCor} \sample \Zp$
-				\item \pcfor $i = 1 \pcto 2\NumP$
-				\item \pctab 
-			\end{nicodemus}
-		\medskip
-			\noindent \textbf{Oracle} 
-			\begin{nicodemus}
-				\item 
+				\item $x_1 \sample \Zp$
+				\item \pcfor $i = 1 \pcto \NumP+1$
+				\item \pctab $\smsg_{i,1}, \ldots, \smsg_{i, 3\NumP+1}$
 			\end{nicodemus}
 		\end{minipage}
 		\qquad
-		\begin{minipage}[t]{4cm}
+		\begin{minipage}[t]{.45\textwidth}
 			\textbf{Oracle} 
 			\begin{nicodemus}
 				\item 
