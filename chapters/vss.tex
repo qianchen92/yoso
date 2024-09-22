@@ -1,0 +1,47 @@
+\section{Verifiable Secret Sharing}
+
+In this section, we give a verifiable secret sharing scheme in the $\YOSOWCC$ model. We follow the bivariate approach introduced in~\cite{STOC:BenGolWig88}. 
+
+\begin{itemize}
+    \item \textbf{Step 1:} To share a secret $s$, the dealer generates a bivariate polynomial $S(x,y)$ with degree-$\NumCor$ for both variable $x$ and $y$ such that $S(0,0) = s$.
+\end{itemize}
+
+\begin{figure}[ht!]%
+	\centering%
+	\nicoresetlinenr
+	\fbox{%
+
+		\begin{minipage}[t]{.45\textwidth}%
+            \calg{$\Dealer(s)$}
+            \begin{nicodemus}
+                \item $S(x,y) \sample \BiSet{s, \NumCor}$
+                \item 
+            \end{nicodemus}
+            \medskip
+            \calg{$\Party_i(f_i(x), g_i(y))$}
+			\begin{nicodemus}
+				\item \pcfor $j \in \{i+1, \ldots, \}$
+                \item \pctab $f_{i,j} \gets f_i(\alpha_j);\;g_{i,j} \gets g_i(\alpha_j)$ 
+			\end{nicodemus}
+		\medskip
+			\noindent \textbf{Oracle} 
+			\begin{nicodemus}
+				\item 
+			\end{nicodemus}
+		\end{minipage}
+		\qquad
+		\begin{minipage}[t]{.45\textwidth}
+			\textbf{Oracle} 
+			\begin{nicodemus}
+				\item 
+			\end{nicodemus}
+		\end{minipage}
+	}%
+	\caption{Verifiable Secret Sharing scheme in the $\YOSOWCC$ model. $\PolySet{s, \NumCor}$ denotes the set of polynomials of degree $\NumCor$}
+	\label{simple-figure}
+\end{figure}
+
+\begin{lemma}[\cite{JC:AshLin17}]
+    Let $K \in [n]$ be a subset of indices such that $|K| \geq \NumCor+1$, let $\{f_k(x), g_k(y)\}_{k \in K}$ be a set of pairs of degree-$\NumCor$ polynomials, and let $\{\alpha_k\}_{k\in K}$ be distinct nonzero elements in $\Field$. If for every $i,j \in K$, we have $f_i(\alpha_j) = g_i(\alpha_i)$, then  there exits a unique bivariate polynomial $S$ of degree-$\NumCor$ in both variables such that $f_k(x) = S(x, \alpha_k)$ and $g_k(x) = S(\alpha_k, y)$ for every $k \in K$.
+\end{lemma}
+
