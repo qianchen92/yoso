@@ -1,12 +1,49 @@
 \section{More Efficient Randomness Generation in the Sending-Leaks Model}
 
-We first give a new randomness generation protocol in the sending-leaks model with $\NumP  = 6 \NumCor+2$, then we improve the protocol into $\NumP = 5 \NumCor+2$.
+We first give a new randomness generation protocol in the sending-leaks model with $\NumP  = 6 \NumCor+1$, then we improve the protocol into $\NumP = 5 \NumCor+1$.
 
-We first divide $6\NumCor+2$ parties into $2$ sets: $3 \NumCor+1$ verifiers $\Verifier_1, \ldots, \Verifier_{3\NumCor+1}$ and $3 \NumCor+1$ publishers $\Publisher_1, \ldots, \Publisher_{3\NumCor+1}$. We denote the set of all subsets $\Sets = \left\{ S \in [3\NumCor+1]\mid |S| = 2\NumCor+1 \right\}$. 
+We first divide $6\NumCor+2$ parties into $2$ sets: $3 \NumCor+1$ verifiers $\Verifier_1, \ldots, \Verifier_{3\NumCor+1}$ and $3 \NumCor+1$ publishers $\Publisher_1, \ldots, \Publisher_{3\NumCor+1}$. We denote the set of all subsets $\Sets = \left\{ S \in [3\NumCor+1]\mid |S| = 2\NumCor+1 \right\}$. We denote by $\minS$ the smallest index in the set $S$.
 
-Our first protocol $\RGSa$ proceeds as follows
+Our first protocol $\RGSa$ proceeds as follows.
 
 \begin{enumerate}
-    \item \textbf{Sharing Phase:}
+    \item \textbf{Sampling Phase:} For every set $S\in \Sets$, the verifier $\Verifier_\minS$ samples a random element in the field $x_S \sample \Field$. Then it sends $x_S$ to all other $\Verifier_j$ such that $j \in S$.
+    \item \textbf{Verification Phase:}
+    \begin{enumerate}
+        \item For every $i \in S$, the verifier $\Verifier_i$ receives a value $x_S$ from $\Verifier_\minS$, it then sends the value to all verifiers $\Verifier_j$ such that $j \in S$ and $j>i$.
+        \item $\Verifier_i$ gets copies of $x_S^j$ for all $j\in S$ with $j<i$. If any copy is not equal to $x_S$, then broadcast "Complain $S$". 
+        \item Otherwise, it uses the Shamir secret-sharing $(\NumCor+1, 3\NumCor)-\SShare$ to generate $(y_1^{S,i}, \ldots, y_{3\NumCor}^{S,i})$, and sends $y_j^{S,i}$ to $\Publisher_j$ for all $j \in \{1, \ldots, 3\NumCor+1\}$.
+    \end{enumerate}
+    \item \textbf{Publishing Phase:} Every publisher simply broadcast all shares it receives from different verifiers.
+    \item \textbf{Reconstruction Phase:}
+    \begin{enumerate}
+        \item For every set $S$ without any complain broadcasted, we have in the broadcast channel $(y_1^{S,j}, \ldots, y_{3\NumCor}^{S,j})$ for all $j \in S$. $\Publisher_i$ computes 
+        $$y^{S,j} \gets \SShare.\Reconst(y_1^{S,j}, \ldots, y_{3\NumCor}^{S,j}).$$
+        \item Compute $y^S \gets \Maj[j\in S] y^{S,j}$. For all $S$, in which there is a complain message in the broadcast channel, set $y^S = 0$.
+        \item Compute the final output as $$y = \sum_{S \in \Sets} y^S$$.
+    \end{enumerate}
 \end{enumerate}
+
+\begin{theorem}\label{thm:RGSa}
+    The output $y$ of the protocol $\RGSa$ is uniformly random even up to $\NumCor$ parties are corrupted in the sending-leaks model. 
+\end{theorem}
+
+Before giving the formal simulation proof of~\cref{thm:RGSa}, we give some proof intuitions. 
+
+We can firstly observe that in all verifiers $\Verifier_1, \ldots, \Verifier_{3\NumCor+1}$
+
+\Chen{Finish the intuition part}
+
+
+\begin{proof}
+    
+    \Chen{Complete the proof}
+
+\end{proof}
+
+We introduce our improved version $\RGSb$ of $\RGSa$. First, we can notice that in $\RGSa$ protocol, the publishers $\Publisher_1, \ldots, \Publisher_{3\NumCor}$ receives information in the form of $(\NumCor+1, 3\NumCor)-\SShare$. Therefore, the adversary gets no additional information while corrupting at most $\NumCor$ publishers. On the other hand, 
+
+
+
+
 
